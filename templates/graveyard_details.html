@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    table{
+        
+        
+        background-color: hsl(0, 9%, 18%,0.8); /* Light gray table background */
+        margin-top: 20px;
+        padding:10px;
+        width:80%;
+        border-radius: 5px;
+        
+    }
+    
+    td{
+        border-radius: 5px;
+        border-color:#bec6ce;
+      
+        
+    }
+    .available{
+        
+        background-color: #08563c;
+        
+    }
+    .buried{
+        
+        background-color: #739dd4;
+        
+    
+
+    }
+    .burried{
+        
+        background-color:blue;
+    }
+    .reserved{
+        
+        background-color:#ff8b94; 
+        
+    }
+
+    /* Responsive toggle button for mobile */
+    @media (max-width: 600px) {
+        .toggle-btn {
+            width: 98vw;
+            min-width: 0;
+            font-size: 0.98rem;
+            padding: 10px 8px;
+            margin: 8px 0;
+        }
+    }
+</style>
+
+{% if error %}
+    <div class="popup"><b>{{ error }}</b></div>
+{% endif %}
+
+<div class="center-text-wrapper">
+    <h3>Welcome to the Graveyard Details Page</h3>
+</div>
+<div class="graveyard-info">
+    <form action="page1">
+        <input type="submit" name="submit" value="Home page">
+    </form>
+
+    <form action="viewgrid" method="POST">
+        {% csrf_token %}
+        <h3>VIEW GRID OF GRAVEYARD</h3>
+        <input type="text" name="graveyard_id" placeholder="ID/Name" required>
+        <input type="submit" name="submit" value="SELECT">
+    </form>
+</div>
+
+
+
+<div class="graveyard-location">
+    
+    <form action="search_graveyard" method="POST">
+        {% csrf_token %}
+        <h3>SEARCH GRAVEYARD</h3>
+        <input type="text" name="location" placeholder="ID/name/location" required>
+        <input type="submit" name="submit" value="Search">
+    </form>
+    {% if info %}
+        {% for i in info %}
+            <div>
+                <p><strong>Name:</strong> {{i.graveyard_name}}</p>
+                <p><strong>Graveyard ID:</strong> {{i.graveyard_id}}</p>
+                <p><strong>Address:</strong> {{i.graveyard_add}}</p>
+                <p><strong>Contact:</strong> {{i.graveyard_phoneno}}</p>
+                <p><strong>No. of plots:</strong> {{i.graveyard_plots}}</p>
+            </div>
+            <form action="viewgrid" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="graveyard_id" value="{{i.graveyard_id}}">
+                <input type="submit" name="submit" value="View Graveyard grid">
+            </form>
+            <hr>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<br>
+
+  
+{% if grid %}
+    <center>
+        
+    <h5>GRAVEYARD GRID FOR <h2>{{graveyard.graveyard_name}}</h2></h5>
+        <table border="1px" >
+        {%for row in grid%}
+        <tr>
+            {%for plot in row%}
+            <td>
+                {%if plot%}
+                <div class="{% if plot.status == 'buried' %}buried{% elif plot.status == 'reserved' %}reserved{% elif plot.status == 'available' %}available{% else %}empty{% endif %}">
+                        Grave ID:{{plot.grave_id}}<br>
+                        No:{{plot.grave_no}}<br>
+                        Status:{{plot.status}}
+                </div>
+                {%else%}
+                    Empty
+                {%endif%}
+            
+            </td>
+            {%endfor%}
+        </tr>
+        {%endfor%}
+    </table>
+    </center>
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <title>{% block title %}My Site{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'web/style.css' %}">
+    
+</head>
+<body>
+    <div id="light-effect"></div>
+    {% block content %}
+    {% endblock %}
+    <script>
+document.addEventListener("mousemove", function (e) {
+    const light = document.getElementById("light-effect");
+    if (light) {
+        light.style.background = `radial-gradient(circle 450px at ${e.clientX}px ${e.clientY}px, rgba(0,0,0,0) 30%, rgba(0,0,0,0.94) 100%)`;
+    }
+});
+</script>
+</body>
+</html>

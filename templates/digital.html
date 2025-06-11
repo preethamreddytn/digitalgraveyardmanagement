@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if error %}
+    <h3 class="popup">{{ error }}</h3>
+{% endif %}
+    <h2 class="center-text-wrapper">DIGITAL GRAVEYARD</h2>
+    <div class="accordion digital-grid">
+    <!-- Upload Memorial -->
+    <div>
+        
+        <button type="button" onclick="toggleSection(0)" class="toggle-btn">
+            UPLOAD MEMORIAL <span class="arrow">&#9660;</span>
+        </button>
+        <button type="button" onclick="toggleSection(1)" class="toggle-btn">
+            SEARCH MEMORIAL <span class="arrow">&#9660;</span>
+        </button>
+        <button type="button" onclick="toggleSection(2)" class="toggle-btn">
+            DECEASED <span class="arrow">&#9660;</span>
+        </button>
+        <!-- Home Button -->
+        <div style="grid-column: 1 / -1;">
+        <form action="page1" class="button" style="text-align:center;">
+            <input class="button-main" type="submit" name="submit" value="Home page">
+        </form>
+
+        </div>
+        <div class="content{% if open_section == '0' %} active{% endif %}">
+            <form action="memorial_upload" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table class="service-table">
+                    <tr><th colspan="2">CREATE DIGITAL MEMORIAL</th></tr>
+                    <tr>
+                        <td>Memorial Name</td>
+                        <td><input type="text" name="name"></td>
+                    </tr>
+                    <tr>
+                        <td>Message</td>
+                        <td><input type="text" name="message"></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Deceased ID</td>
+                        <td><input type="text" name="id"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="service-btn-row">
+                            <input class="service-btn" type="submit" name="submit" value="CREATE">
+                            <input type="hidden" name="open_section" value="0">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    <!-- Search Memorial -->
+    <div>
+        
+        <div class="content{% if open_section == '1' %} active{% endif %}">
+            <form action="search_memorial" method="POST">
+                {% csrf_token %}
+                <table class="service-table">
+                    <tr><th colspan="2">SEARCH DIGITAL MEMORIAL</th></tr>
+                    <tr>
+                        <td>Memorial Name</td>
+                        <td><input type="text" name="name" placeholder="Enter memorial name"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="service-btn-row">
+                            <input class="service-btn" type="submit" name="submit" value="Search">
+                            <input type="hidden" name="open_section" value="1">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            {% if memo %}
+                {% for i in memo %}
+                    <div class="info-board" style="margin-top:16px;">
+                        
+                        <div class="info-board-details">
+                            <div>Memorial name: {{ i.memorial_name }}</div>
+                            <div>Deceased name: {{ i.memorial_deceased_id.deceased_name }}</div>
+                            <div>Memorial id: {{ i.memorial_id }}</div>
+                            <div>Deceased id: {{ i.memorial_deceased_id }}</div>
+                            <div>Message: {{ i.memorial_message }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <!-- Deceased Section -->
+    <div style="grid-column: 1 / -1;">
+        
+        <div class="content{% if open_section == '2' %} active{% endif %}">
+            <div>
+                <form action="search_deceased" method="POST" >
+                {%csrf_token%}
+                <table class="service-table">
+                    <tr><td>ENTER DECEASED ID<input type="text" name="id" placeholder="DECEASED ID" required></td></tr>
+                    <tr><td><input class="service-btn" type="submit" name="submit" value="Search"></td> </tr>
+                </table>
+            </form>
+            </div>
+            {% if dinfo %}
+    <div class="info-board">
+        <div class="info-board-details">
+            <div>Deceased ID: {{ dinfo.deceased_id }}</div>
+            <div>Deceased Name: {{ dinfo.deceased_name }}</div>
+            <div>Memorial ID: {{ m_id }}</div>
+            <div>Information: {{ dinfo.deceased_info }}</div>
+        </div>
+    </div>
+{% endif %}
+        </div>
+    </div>
+    
+</div>
+<script>
+function toggleSection(index) {
+    const sections = document.querySelectorAll(".accordion .content");
+    const arrows = document.querySelectorAll(".accordion .arrow");
+    sections.forEach((section, i) => {
+        if (i === index) {
+            const isActive = section.classList.contains("active");
+            section.classList.toggle("active");
+            arrows[i].innerHTML = isActive ? "&#9660;" : "&#9650;";
+        } else {
+            section.classList.remove("active");
+            arrows[i].innerHTML = "&#9660;";
+        }
+    });
+}
+</script>
+{% endblock %}
