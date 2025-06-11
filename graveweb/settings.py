@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-b5m+za*w+i#9d&y$8#+%!*vm)ygi=^1y9n-jz0s@lb4mwk$cb0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.onrender.com']
 
 
 # Application definition
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'graveweb.urls'
@@ -86,6 +87,7 @@ DATABASES = {
         'OPTIONS': {
         'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
+        'default': dj_database_url.config(default=os.environ.get('DATABASE_URL')),
 }
 }
 
@@ -134,3 +136,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
