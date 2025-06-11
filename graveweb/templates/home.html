@@ -1,0 +1,77 @@
+{%extends 'base.html'%}
+
+{% block content %}
+
+{% if error %}
+    <h3 class="popup">{{error}}</h3>
+{% endif %}
+    <!-- Signin Form -->
+<form action="signin" method="POST">
+    {% csrf_token %}
+    
+    <div class="signin">
+        <table class="signin-table">
+            <tr>
+                <td>USERNAME</td>
+                <td><input type="text" name="username" placeholder="           USERNAME"></td>
+            </tr>
+            <tr>
+                <td>PASSWORD</td>
+                <td><input type="password" name="password" placeholder="           PASSWORD" required></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input class="button-main" type="submit" value="SIGN IN">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+<!-- Guest User Button -->
+<div class="guest">
+    <form action="guest" method="POST">
+        {% csrf_token %}
+        <input class="button-guest" type="submit" value="GUEST USER" name="GUEST USER">
+    </form>
+</div>
+
+<!-- Signup Form -->
+<form action="signup" method="POST">
+    {% csrf_token %}
+    <div class="signup">
+        <table class="signup-table">
+            <tr>
+                <td>FIRST NAME</td>
+                <td><input type="text" name="first_name" placeholder="  FIRST NAME" required></td>
+            </tr>
+            <tr>
+                <td>LAST NAME</td>
+                <td><input type="text" name="last_name" placeholder="   LAST NAME" required></td>
+            </tr>
+            <tr>
+                <td>EMAIL</td>
+                <td><input type="email" name="email" placeholder="  EMAIL" required></td>
+            </tr>
+            <tr>
+                <td>USERNAME</td>
+                <td><input type="text" name="username" placeholder="   USERNAME"required></td>
+            </tr>
+            <tr>
+                <td>PASSWORD</td>
+                <td><input type="password" name="password" placeholder="   PASSWORD" required></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input class="button-main" type="submit" value="SIGN UP">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+        
+    
+    
+   
+    
+{% endblock %}

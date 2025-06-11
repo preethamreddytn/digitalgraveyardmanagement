@@ -1,0 +1,157 @@
+{%extends 'base.html'%}
+{% block content %}
+    {% if error %}
+        <h3 class="popup">{{error}}</h3>
+    {% endif %}
+    <div class="center-text-wrapper">
+        <h3 >
+        ONLINE SERVICES
+        </h3>
+    </div>
+    <div class="accordion">
+    <div class="toggles">
+        <button type="button" onclick="toggleSection(0)" class="toggle-btn">
+            Maintainance <span class="arrow">&#9660;</span>
+        </button>
+        <button type="button" onclick="toggleSection(1)" class="toggle-btn">
+            Reservation <span class="arrow">&#9660;</span>
+        </button>
+        <form action="page1" class="button" style="display:inline;">
+            <input class="button-main" type="submit" name="submit" value="Home page">
+        </form>
+    </div>
+
+    <div>
+        <div class="content{% if open_section == '0' %} active{% endif %}">
+            <div class="service-table">
+                <form action="main_status" method="POST">
+                {%csrf_token%}
+                <table>
+                    <tr><td>MAIN.. ID</td><td><input type="text" name="id" placeholder="M..ID"> </td></tr>
+                    <tr><td><input class="service-btn" type="submit"  name="submit" value="View"> </td></tr>
+                </table>
+                </form>
+            </div>
+            {% if ma %}
+            <div class="info-board">
+                
+                    <table>
+                    Maintainance ID:{{ma.main_id}}<br>
+                    Date of request:{{ma.main_date}}<br>
+                    Grave ID:{{ma.main_grave_id}}<br>
+                    Status:<h3>{{ma.main_status}}</h3><br>
+                    {% if pb %}
+                        Staff in charge:{{pb.employee_id}}<br>
+                        Completed at:{{pb.completed_at}}<br>
+                    {% endif %}
+                    </table>
+                
+            </div>
+            {% endif %}
+            <div>
+                <form action="maintainance" method="POST">
+                    {% csrf_token %}
+                    <table class="service-table">
+                        <tr>
+                            <th colspan="2">Enter Maintainance Details</th>
+                        </tr>
+                        <tr>
+                            <td>Your Name</td>
+                            <td><input type="text" name="name" placeholder="Name"></td>
+                        </tr>
+                        <tr>
+                            <td>Contact Number</td>
+                            <td><input type="number" name="phoneno" placeholder="Phone number"></td>
+                        </tr>
+                        <tr>
+                            <td>Grave ID</td>
+                        <td><input type="number" name="graveid" placeholder="Grave ID"></td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td><input type="text" name="disc" placeholder="Description"></td>
+                        </tr>
+                        <tr>
+                            <td>Complete By</td>
+                            <td><input type="date" name="date"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="service-btn-row">
+                            <input class="service-btn" type="submit" name="submit" value="Proceed">
+                            <input type="hidden" name="open_section" value="0">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        
+        <div class="content{% if open_section == '1' %} active{% endif %}">
+            
+            <form action="graveyard_info" method="POST">
+            {% csrf_token %}
+            <table class="service-table">
+        <tr>
+            <th colspan="2">Know about graveyard</th>
+        </tr>
+        <tr>
+            <td colspan="2" class="service-btn-row">
+                <input class="service-btn" type="submit" name="submit" value="CLICK HERE">
+            </td>
+        </tr>
+    </table>
+</form>
+<form action="reserve" method="POST">
+    {% csrf_token %}
+    <table class="service-table">
+        <tr>
+            <th colspan="2">Reserve a Grave</th>
+        </tr>
+        <tr>
+            <td>Your Name</td>
+            <td><input type="text" name="name" placeholder="Name" required></td>
+        </tr>
+        <tr>
+            <td>Phone Number</td>
+            <td><input type="text" name="phoneno" placeholder="Phone number" required></td>
+        </tr>
+        <tr>
+            <td>Grave ID</td>
+            <td><input type="text" name="grave_id" placeholder="Grave ID" required></td>
+        </tr>
+        <tr>
+            <td>Aadhaar No</td>
+            <td><input type="number" name="proof" placeholder="000000000000" required></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="service-btn-row">
+                <input class="service-btn" type="submit" name="submit" value="Book">
+                <input type="hidden" name="open_section" value="1">
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+    </div>
+</div>
+
+
+
+
+    <script>
+    function toggleSection(index) {
+        const sections = document.querySelectorAll(".accordion .content");
+        const arrows = document.querySelectorAll(".accordion .arrow");
+        sections.forEach((section, i) => {
+            if (i === index) {
+                const isActive = section.classList.contains("active");
+                section.classList.toggle("active");
+                arrows[i].innerHTML = isActive ? "&#9660;" : "&#9650;";
+            } else {
+                section.classList.remove("active");
+                arrows[i].innerHTML = "&#9660;";
+            }
+        });
+    }
+</script>
+{%endblock%}
