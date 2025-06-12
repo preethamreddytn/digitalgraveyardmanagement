@@ -89,7 +89,7 @@ DATABASES = {
         'OPTIONS': {
         'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
-        'default': dj_database_url.config(default=os.environ.get('DATABASE_URL')),
+        'default': dj_database_url.config(default='mysql://unissqsttmnskhqv:Bjfom2nQzAP6ehXpWtUs@bd0rxkatsj75r4qzeex1-mysql.services.clever-cloud.com:3306/bd0rxkatsj75r4qzeex1'),
 }
 }
 
