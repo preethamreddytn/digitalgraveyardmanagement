@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,7 +77,7 @@ WSGI_APPLICATION = 'graveweb.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default':{
+    'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bd0rxkatsj75r4qzeex1',
         'USER': 'unissqsttmnskhqv',
@@ -87,10 +85,9 @@ DATABASES = {
         'HOST': 'bd0rxkatsj75r4qzeex1-mysql.services.clever-cloud.com',
         'PORT': '3306',
         'OPTIONS': {
-        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-        
-}
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
+    }
 }
 
 
@@ -129,16 +126,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'web', 'static')]
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'web', 'static'),
+]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL='/media/'
-MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
