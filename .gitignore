@@ -6,7 +6,6 @@ env/
 venv/
 db.sqlite3
 .vscode/
-staticfiles/
 media/
 # Ignore system and personal files
 ../
