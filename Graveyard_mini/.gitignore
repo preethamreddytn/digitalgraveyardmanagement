@@ -8,3 +8,16 @@ db.sqlite3
 .vscode/
 staticfiles/
 media/
+# Ignore system and personal files
+../
+*.ipynb
+*.exe
+*.zip
+*.log
+*.dat
+*.ini
+anaconda3/
+*.DS_Store
+__pycache__/
+*.pyc
+.vscode/
