@@ -460,6 +460,18 @@ body > *:not(style):not(script) {
     max-width: 400px;   /* or your preferred size */
     max-height: 200px;
 }
+.rights{
+    position:absolute;
+    top:80%;
+    left:42%;
+   
+
+}
+.rightsfont{
+    padding:10px;
+    font-family:'Times New Roman', Times, serif;
+    margin:10px;
+}
 
 
 
