@@ -2,7 +2,7 @@
 
 A comprehensive Django-based web application for managing and maintaining digital records of graveyards and cemetery sites.
 
-**Live Demo:** https://digitalgraveyardmanagement.onrender.com
+**Live Demo:** https://digital-graveyard-management.onrender.com/
 
 ## Overview
 
